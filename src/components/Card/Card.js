@@ -8,9 +8,9 @@ import './Card.css';
 // React composition split complex or large components into smaller ones to become reusable and,
 // avoid repeating code
 
-function Card(props) {
+const Card = (props) => {
   const { className, children } = props;
   return <div className={`card ${className}`}>{children}</div>;
-}
+};
 
 export default Card;
