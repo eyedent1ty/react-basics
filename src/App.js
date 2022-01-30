@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Expenses from './components/Expenses/Expenses';
 import NewExpense from './components/NewExpense/NewExpense';
 
 const App = () => {
-  const expenses = [
+  const saveExpenseDataHandler = (enteredExpenseData) => {
+    const expenseData = {
+      ...enteredExpenseData,
+      id: Math.random().toString(),
+    };
+
+    setExpenses((prevState) => {
+      return [...prevState, expenseData];
+    });
+  };
+
+  const [expenses, setExpenses] = useState([
     {
       id: 'e1',
       title: 'Toiler Paper',
@@ -29,11 +40,11 @@ const App = () => {
       amount: 450,
       date: new Date(2021, 5, 12),
     },
-  ];
+  ]);
 
   return (
     <div>
-      <NewExpense />
+      <NewExpense onSaveExpenseData={saveExpenseDataHandler} />
       <Expenses items={expenses} />;
     </div>
   );

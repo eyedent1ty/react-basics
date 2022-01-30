@@ -6,15 +6,7 @@ import Card from '../UI/Card';
 import './ExpenseItem.css';
 
 const ExpenseItem = (props) => {
-  const { date, amount } = props;
-
-  // useState() function  returns array with 2 elements
-  // the value, and the function that you needed to invoke to change that value
-  const [title, setTitle] = useState(props.title);
-
-  const clickHandler = () => {
-    setTitle('New Title'); // Asynchronous
-  };
+  const { date, title, amount } = props;
 
   return (
     <Card className="expense-item">
@@ -27,7 +19,6 @@ const ExpenseItem = (props) => {
       <div className="expense-item__description">
         <h2>{title}</h2>
         <div className="expense-item__price">${amount}</div>
-        <button onClick={clickHandler}>Change title</button>
       </div>
     </Card>
   );
