@@ -15,7 +15,14 @@ const Expenses = (props) => {
         Every attribute that is passed in a component will always be a propery of the props object
       */}
       {items.map(({ id, title, date, amount }) => (
-        <ExpenseItem key={id} date={date} title={title} amount={amount} />
+        <ExpenseItem
+          key={id}
+          date={date}
+          title={title}
+          amount={amount}
+          id={id}
+          onClickRemove={props.onClickRemove}
+        />
       ))}
     </Card>
   );

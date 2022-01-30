@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import ExpenseDate from './ExpenseDate';
 import Card from '../UI/Card';
@@ -7,6 +7,10 @@ import './ExpenseItem.css';
 
 const ExpenseItem = (props) => {
   const { date, title, amount } = props;
+
+  const removeItem = () => {
+    props.onClickRemove(props.id);
+  };
 
   return (
     <Card className="expense-item">
@@ -19,6 +23,9 @@ const ExpenseItem = (props) => {
       <div className="expense-item__description">
         <h2>{title}</h2>
         <div className="expense-item__price">${amount}</div>
+        <button className="remove-expense" onClick={removeItem}>
+          Remove
+        </button>
       </div>
     </Card>
   );

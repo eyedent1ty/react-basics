@@ -15,6 +15,10 @@ const App = () => {
     });
   };
 
+  const filterExpenses = (expenseId) => {
+    setExpenses(expenses.filter((expense) => expense.id !== expenseId));
+  };
+
   const [expenses, setExpenses] = useState([
     {
       id: 'e1',
@@ -45,7 +49,7 @@ const App = () => {
   return (
     <div>
       <NewExpense onSaveExpenseData={saveExpenseDataHandler} />
-      <Expenses items={expenses} />;
+      <Expenses items={expenses} onClickRemove={filterExpenses} />;
     </div>
   );
 };
