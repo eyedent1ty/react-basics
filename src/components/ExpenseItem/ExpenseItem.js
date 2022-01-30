@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import ExpenseDate from '../ExpenseDate/ExpenseDate';
 import Card from '../Card/Card';
@@ -6,7 +6,15 @@ import Card from '../Card/Card';
 import './ExpenseItem.css';
 
 const ExpenseItem = (props) => {
-  const { date, title, amount } = props;
+  const { date, amount } = props;
+
+  // useState() function  returns array with 2 elements
+  // the value, and the function that you needed to invoke to change that value
+  const [title, setTitle] = useState(props.title);
+
+  const clickHandler = () => {
+    setTitle('New Title'); // Asynchronous
+  };
 
   return (
     <Card className="expense-item">
@@ -19,6 +27,7 @@ const ExpenseItem = (props) => {
       <div className="expense-item__description">
         <h2>{title}</h2>
         <div className="expense-item__price">${amount}</div>
+        <button onClick={clickHandler}>Change title</button>
       </div>
     </Card>
   );

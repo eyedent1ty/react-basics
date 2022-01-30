@@ -7,7 +7,6 @@ import './Expenses.css';
 
 const Expenses = (props) => {
   const { items } = props;
-
   return (
     <Card className="expenses">
       {/*If you pass a className to your component, you need to manually apply it,
