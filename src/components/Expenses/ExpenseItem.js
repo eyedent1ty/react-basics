@@ -8,10 +8,6 @@ import './ExpenseItem.css';
 const ExpenseItem = (props) => {
   const { date, title, amount } = props;
 
-  const removeItem = () => {
-    props.onClickRemove(props.id);
-  };
-
   return (
     <Card className="expense-item">
       {/*If you pass a className to your component, you need to manually apply it,
@@ -23,9 +19,6 @@ const ExpenseItem = (props) => {
       <div className="expense-item__description">
         <h2>{title}</h2>
         <div className="expense-item__price">${amount}</div>
-        <button className="remove-expense" onClick={removeItem}>
-          Remove
-        </button>
       </div>
     </Card>
   );

@@ -52,31 +52,3 @@
     padding: 0.5rem 1.5rem;
   }
 }
-
-.remove-expense {
-  font: inherit;
-  cursor: pointer;
-  padding: 1rem 2rem;
-  border: 1px solid #40005d;
-  background-color: #40005d;
-  color: white;
-  border-radius: 12px;
-  margin-right: 1rem;
-}
-
-.remove-expense:hover,
-.remove-expense:active {
-  background-color: #510674;
-  border-color: #510674;
-}
-
-.remove-expense.alternative {
-  color: #220131;
-  border-color: transparent;
-  background-color: transparent;
-}
-
-.remove-expense.alternative:hover,
-.remove-expense.alternative:active {
-  background-color: #ddb3f8;
-}

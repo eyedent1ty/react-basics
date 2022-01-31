@@ -1,35 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import ExpenseItem from './ExpenseItem';
+import ExpensesFilter from './ExpensesFilter';
 import Card from '../UI/Card';
 
 import './Expenses.css';
 
 const Expenses = (props) => {
-  const { items } = props;
-  console.log('Expenses re-rendered');
-  console.log(items);
+  const [filteredYear, setFilteredYear] = useState('2020');
+
+  const filterChangeHandler = (selectedYear) => {
+    setFilteredYear(selectedYear);
+  };
+
   return (
     <Card className="expenses">
+      <ExpensesFilter
+        selected={filteredYear}
+        onFilterChange={filterChangeHandler}
+      />
       {/*If you pass a className to your component, you need to manually apply it,
        by going to the codebase of the component and extract the className property on the props object
        and put it in the className of the returning element of that component, e.g., Card component got a className
         Every attribute that is passed in a component will always be a propery of the props object
       */}
-      {items.length ? (
-        items.map(({ id, title, date, amount }) => (
+      {props.items
+        .filter((item) => item.date.getFullYear().toString() === filteredYear)
+        .map((expense) => (
           <ExpenseItem
-            key={id}
-            date={date}
-            title={title}
-            amount={amount}
-            id={id}
-            onClickRemove={props.onClickRemove}
+            key={expense.id}
+            title={expense.title}
+            amount={expense.amount}
+            date={expense.date}
           />
-        ))
-      ) : (
-        <div style={{ textAlign: 'center', color: 'red' }}>LIST IS EMPTY</div>
-      )}
+        ))}
     </Card>
   );
 };

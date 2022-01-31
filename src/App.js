@@ -1,81 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Expenses from './components/Expenses/Expenses';
 import NewExpense from './components/NewExpense/NewExpense';
-import FilterExpenses from './components/Expenses/FilterExpenses';
-import EXPENSES_DATA from './data';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      expenses: EXPENSES_DATA,
-      previewExpenses: EXPENSES_DATA,
-    };
-  }
+import EXPENSES_DATA from './expenses_data';
 
-  saveExpenseDataHandler = (enteredExpenseData) => {
-    const expenseData = {
-      ...enteredExpenseData,
-      id: Math.random().toString(),
-    };
+const App = () => {
+  const [expenses, setExpenses] = useState(EXPENSES_DATA);
 
-    this.setState((prevState) => {
-      prevState.expenses.push(expenseData);
-      return {
-        expenses: prevState.expenses,
-        previewExpenses: prevState.expenses,
-      };
+  const addExpenseHandler = (expense) => {
+    setExpenses((prevExpenses) => {
+      return [...prevExpenses, expense];
     });
   };
 
-  removeExpense = (expenseId) => {
-    this.setState((prevState) => {
-      return {
-        expenses: prevState.expenses.filter(
-          (expense) => expense.id !== expenseId
-        ),
-        previewExpenses: prevState.expenses.filter(
-          (expense) => expense.id !== expenseId
-        ),
-      };
-    });
-  };
-
-  filterByDate = (selectedDate) => {
-    if (selectedDate === 'None') {
-      this.setState((prevState) => {
-        return {
-          expenses: prevState.expenses,
-          previewExpenses: prevState.expenses,
-        };
-      });
-      return;
-    }
-
-    this.setState((prevState) => {
-      return {
-        expenses: prevState.expenses,
-        previewExpenses: prevState.expenses.filter(
-          (expense) => expense.date.getFullYear().toString() === selectedDate
-        ),
-      };
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        <NewExpense onSaveExpenseData={this.saveExpenseDataHandler} />
-        <FilterExpenses filterByDate={this.filterByDate} />
-        <Expenses
-          items={this.state.previewExpenses}
-          onClickRemove={this.removeExpense}
-        />
-        ;
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <NewExpense onAddExpense={addExpenseHandler} />
+      <Expenses items={expenses} />;
+    </div>
+  );
+};
 
 export default App;
