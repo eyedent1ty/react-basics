@@ -1,57 +1,81 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Expenses from './components/Expenses/Expenses';
 import NewExpense from './components/NewExpense/NewExpense';
+import FilterExpenses from './components/Expenses/FilterExpenses';
+import EXPENSES_DATA from './data';
 
-const App = () => {
-  const saveExpenseDataHandler = (enteredExpenseData) => {
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      expenses: EXPENSES_DATA,
+      previewExpenses: EXPENSES_DATA,
+    };
+  }
+
+  saveExpenseDataHandler = (enteredExpenseData) => {
     const expenseData = {
       ...enteredExpenseData,
       id: Math.random().toString(),
     };
 
-    setExpenses((prevState) => {
-      return [...prevState, expenseData];
+    this.setState((prevState) => {
+      prevState.expenses.push(expenseData);
+      return {
+        expenses: prevState.expenses,
+        previewExpenses: prevState.expenses,
+      };
     });
   };
 
-  const filterExpenses = (expenseId) => {
-    setExpenses(expenses.filter((expense) => expense.id !== expenseId));
+  removeExpense = (expenseId) => {
+    this.setState((prevState) => {
+      return {
+        expenses: prevState.expenses.filter(
+          (expense) => expense.id !== expenseId
+        ),
+        previewExpenses: prevState.expenses.filter(
+          (expense) => expense.id !== expenseId
+        ),
+      };
+    });
   };
 
-  const [expenses, setExpenses] = useState([
-    {
-      id: 'e1',
-      title: 'Toiler Paper',
-      amount: 94.12,
-      date: new Date(2020, 7, 14),
-    },
-    {
-      id: 'e2',
-      title: 'New TV',
-      amount: 799.49,
-      date: new Date(2021, 2, 12),
-    },
-    {
-      id: 'e3',
-      title: 'Car Insurance',
-      amount: 294.67,
-      date: new Date(2021, 2, 28),
-    },
-    {
-      id: 'e4',
-      title: 'New Desk (Wooden)',
-      amount: 450,
-      date: new Date(2021, 5, 12),
-    },
-  ]);
+  filterByDate = (selectedDate) => {
+    if (selectedDate === 'None') {
+      this.setState((prevState) => {
+        return {
+          expenses: prevState.expenses,
+          previewExpenses: prevState.expenses,
+        };
+      });
+      return;
+    }
 
-  return (
-    <div>
-      <NewExpense onSaveExpenseData={saveExpenseDataHandler} />
-      <Expenses items={expenses} onClickRemove={filterExpenses} />;
-    </div>
-  );
-};
+    this.setState((prevState) => {
+      return {
+        expenses: prevState.expenses,
+        previewExpenses: prevState.expenses.filter(
+          (expense) => expense.date.getFullYear().toString() === selectedDate
+        ),
+      };
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <NewExpense onSaveExpenseData={this.saveExpenseDataHandler} />
+        <FilterExpenses filterByDate={this.filterByDate} />
+        <Expenses
+          items={this.state.previewExpenses}
+          onClickRemove={this.removeExpense}
+        />
+        ;
+      </div>
+    );
+  }
+}
 
 export default App;

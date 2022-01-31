@@ -7,6 +7,8 @@ import './Expenses.css';
 
 const Expenses = (props) => {
   const { items } = props;
+  console.log('Expenses re-rendered');
+  console.log(items);
   return (
     <Card className="expenses">
       {/*If you pass a className to your component, you need to manually apply it,
@@ -14,16 +16,20 @@ const Expenses = (props) => {
        and put it in the className of the returning element of that component, e.g., Card component got a className
         Every attribute that is passed in a component will always be a propery of the props object
       */}
-      {items.map(({ id, title, date, amount }) => (
-        <ExpenseItem
-          key={id}
-          date={date}
-          title={title}
-          amount={amount}
-          id={id}
-          onClickRemove={props.onClickRemove}
-        />
-      ))}
+      {items.length ? (
+        items.map(({ id, title, date, amount }) => (
+          <ExpenseItem
+            key={id}
+            date={date}
+            title={title}
+            amount={amount}
+            id={id}
+            onClickRemove={props.onClickRemove}
+          />
+        ))
+      ) : (
+        <div style={{ textAlign: 'center', color: 'red' }}>LIST IS EMPTY</div>
+      )}
     </Card>
   );
 };
