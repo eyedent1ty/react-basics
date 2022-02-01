@@ -10,14 +10,14 @@ const App = () => {
 
   const addExpenseHandler = (expense) => {
     setExpenses((prevExpenses) => {
-      return [...prevExpenses, expense];
+      return [expense, ...prevExpenses];
     });
   };
 
   return (
     <div>
       <NewExpense onAddExpense={addExpenseHandler} />
-      <Expenses items={expenses} />;
+      <Expenses items={expenses} />
     </div>
   );
 };
