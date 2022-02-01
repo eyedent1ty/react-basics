@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import ExpensesFilter from './ExpensesFilter';
 import Card from '../UI/Card';
 import ExpensesList from './ExpensesList';
+import ExpensesChart from './ExpensesChart';
 
 import './Expenses.css';
 
@@ -17,11 +18,27 @@ const Expenses = (props) => {
     (item) => item.date.getFullYear().toString() === filteredYear
   );
 
+  const sum = (...args) => {
+    let total = 0;
+    for (const num of args) {
+      total += num;
+    }
+    return total;
+  };
+
+  const dataPointValues = filteredExpenses.map((expense) => expense.amount);
+  const totalExpensesAmount = sum(...dataPointValues);
+
   return (
     <Card className="expenses">
       <ExpensesFilter
         selected={filteredYear}
         onFilterChange={filterChangeHandler}
+        totalAmount={totalExpensesAmount}
+      />
+      <ExpensesChart
+        expenses={filteredExpenses}
+        totalAmount={totalExpensesAmount}
       />
       <ExpensesList items={filteredExpenses} />
     </Card>
